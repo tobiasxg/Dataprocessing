@@ -5,13 +5,6 @@
 */
 
 
-// Get all the necessary data from the textarea in the html file 
-function getData(){
-	var list = document.getElementById("dataId").innerHTML.split("\n");
-	var data = myLoop(list);
-	return data;
-}
-
 // This function finds all dates and temperatures with a loop over the data
 function myLoop(list) {
 	var dates = [];
@@ -201,21 +194,22 @@ function drawTicks(canvas, point, transformDates, monthNum, sideValue){
 
 
 // This functions start the with getting the data and drawing the function
-function main(){
-	var data = getData();
+function mainGraph(raw){
+	var list = raw.split("\n")
+	var data = myLoop(list);
 	canvasFunction(data[0], data[1]);
 }
 
 // Function that should wait on loading the KNMI.txt and afterwards creating the graph
-function xmlRequest(){
-	var http = new XMLHttpRequest();
-	http.onreadystatechange = function(){
-		if(http.readyState == 4 && http.status == 200){
-			loadXMLDoc();
-			console.log(http);
+function main() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("dataId").innerHTML =
+			this.responseText;
+			mainGraph(this.responseText);
 		}
 	};
-	http.open("GET", "KNMI.txt", false);
-	http.send();
-	main()
+	xhttp.open("GET", "KNMI.txt", true);
+	xhttp.send();
 }
