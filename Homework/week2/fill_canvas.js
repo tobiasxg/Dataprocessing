@@ -25,16 +25,6 @@ function myLoop(list) {
 	return [dates, temps];
 }
 
-// temporarily unused
-function transformPoints(point, maxValue, minValue, canvasDim){
-	var absMin = Math.abs(minValue);
-	var absMax = Math.abs(maxValue);
-	var absTot = absMin+absMax;
-	var newPoint = canvasDim/absTot*point;
-	var newPoint = canvasDim/(maxValue+minValue)*point;
-	return newPoint;	
-}
-
 function createTransform(domain, range){
 	// Domain is a two-element array of the data bounds [domain_min, domain_max]
 	// Range is a two-element array of the screen bounds [range_min, range_max]
@@ -78,8 +68,8 @@ function canvasFunction(dates, temps){
 	var tempDomain = [250, -50];
 
 	// Get the transform functions
-	var transformTemps = createTransform(tempDomain, [sideValue,canvas.height-sideValue])
-	var transformDates = createTransform([0,dates.length], [sideValue,canvas.width-sideValue])
+	var transformTemps = createTransform(tempDomain, [sideValue,canvas.height-sideValue]);
+	var transformDates = createTransform([0,dates.length], [sideValue,canvas.width-sideValue]);
 
 	// Impossible month to start at a new month
 	var prevMonth = 876;
@@ -189,7 +179,6 @@ function drawTicks(canvas, point, transformDates, monthNum, sideValue){
 	ctx.lineTo(point, canvas.height-sideValue+15);
 	ctx.stroke();
 	ctx.fillText(month, point+10, canvas.height-sideValue+25)
-
 }
 
 
