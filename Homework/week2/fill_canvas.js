@@ -1,28 +1,32 @@
+/* Tobias Garritsen, 10779582
+* These are all functions necessary to load the graph of temperatures in the 
+* html file for the assignment of the second week. This is done with the help
+* of canvas.
+*/
 
+
+// Get all the necessary data from the textarea in the html file 
 function getData(){
 	var list = document.getElementById("dataId").innerHTML.split("\n");
 	var data = myLoop(list);
 	return data;
 }
 
+// This function finds all dates and temperatures with a loop over the data
 function myLoop(list) {
 	var dates = [];
 	var temps = [];
+
 	for (i = 0; i < list.length-1; i++) {
 		curr = list[i];
 		curr = curr.replace(/\s/g,'');
 		curr_s = curr.split(",");
-//		days[i] = curr_s[1];
 		temps[i] = Number(curr_s[2]);
-
-//		document.getElementById("demo2").innerHTML = curr_s[0];
 		year = curr_s[1].substring(0,4);
 		month = curr_s[1].substring(4,6);
 		day = curr_s[1].substring(6,8);
 		var date = new Date(year+'-'+month+'-'+day)
-//		var date = new Date(year, month, day)
 		dates[i] = date
-//		console.log(dates[i])
 	}
 	console.log();
 	return [dates, temps];
@@ -39,74 +43,179 @@ function transformPoints(point, maxValue, minValue, canvasDim){
 }
 
 function createTransform(domain, range){
-	// domain is a two-element array of the data bounds [domain_min, domain_max]
-	// range is a two-element array of the screen bounds [range_min, range_max]
-	// this gives you two equations to solve:
-	// range_min = alpha * domain_min + beta
-	// range_max = alpha * domain_max + beta
-	// a solution would be:
+	// Domain is a two-element array of the data bounds [domain_min, domain_max]
+	// Range is a two-element array of the screen bounds [range_min, range_max]
+	// This gives you two equations to solve:
+	// Range_min = alpha * domain_min + beta
+	// Range_max = alpha * domain_max + beta
+	// A solution would be:
 
 	var domainMin = domain[0]
 	var domainMax = domain[1]
 	var rangeMin = range[0]
 	var rangeMax = range[1]
 
-	// formulas to calculate the alpha and the beta
+	// Formulas to calculate the alpha and the beta
 	var alpha = (rangeMax - rangeMin) / (domainMax - domainMin)
 	var beta = rangeMax - alpha * domainMax
 
-	// returns the function for the linear transformation (y= a * x + b)
+	// Returns the function for the linear transformation (y= a * x + b)
 	return function(x){
 		return alpha * x + beta;
 	}
 }
 
 
+// The main canvas function for drawing the graph
 function canvasFunction(dates, temps){
+	// Initialize the canvas and the begin and end points
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
 	var maxTemp = Math.max.apply(Math,temps);
 	var minTemp = Math.min.apply(Math,temps);
-	canvas.width = 800;
-	canvas.height = 400;
-	oldPoint = 0;
-	oldDatePoint = 0;
 
-	var transformTemps = createTransform([-38,236], [0,canvas.height])
-	var transformDates = createTransform([0,dates.length], [0,canvas.width])
+	// The sideValue is the space around the entire graph
+	sideValue = 50;
+	canvas.width = 800+sideValue+sideValue;
+	canvas.height = 400+sideValue+sideValue;
+	oldPoint = sideValue;
+	oldDatePoint = sideValue;
 
+	// Hardcoded temperature domain (all temperatures are within this range)
+	var tempDomain = [250, -50];
+
+	// Get the transform functions
+	var transformTemps = createTransform(tempDomain, [sideValue,canvas.height-sideValue])
+	var transformDates = createTransform([0,dates.length], [sideValue,canvas.width-sideValue])
+
+	// Impossible month to start at a new month
+	var prevMonth = 876;
+
+	// Loop that goes over all days and draws the line at the right temperatures
 	for (i = 0; i < dates.length; i++) {
-		//var newPoint = transformPoints(temps[i], maxTemp, minTemp, canvas.height);
-		//var datePoint = transformPoints(i, dates.length, 0, canvas.width);
+		//Var newPoint = transformPoints(temps[i], maxTemp, minTemp, canvas.height);
+		//Var datePoint = transformPoints(i, dates.length, 0, canvas.width);
 
+		// Find the new necessary points for the next line to draw
 		var newPoint = transformTemps(temps[i]);
 		var datePoint = transformDates(i);
 
-		console.log(dates[i])
-		console.log(dates[i].getDay())
-		console.log(dates[i].getMonth())
-		console.log(dates[i].getYear())
+		// For every time the current month is different than the previous (thus new),
+		// draw a tick
+		if (dates[i].getMonth()!= prevMonth){
+			drawTicks(canvas, datePoint, transformDates, dates[i].getMonth(),sideValue)
+		}
+		prevMonth = dates[i].getMonth()
 
-//		if (dates.getDay())
-
-//		console.log(temps[i])
-//		console.log(newPoint);
+		// Draw the lines of the temperatures
 		ctx.moveTo(oldDatePoint,oldPoint);
 		ctx.lineTo(datePoint,newPoint);
 		ctx.stroke();
 		oldPoint = newPoint;
 		oldDatePoint = datePoint;
 	}
+
+	// Draw the ticks for the temperature
+	tempTicks(canvas, tempDomain, sideValue);
 }
 
-//function drawCanvasText(canvas, dates){
-//	ctx.strokeText(text, x, y [, maxWidth]);
-//}
 
+// Draw the ticks and text on the vertical axis of the temperature
+function tempTicks(canvas, tempDomain, sideValue){
+	var ctx = canvas.getContext("2d");
+	ctx.moveTo(sideValue, sideValue);
+	ctx.lineTo(sideValue, canvas.height-sideValue);
+	ctx.stroke();
+	ctx.moveTo(sideValue, canvas.height-sideValue);
+	ctx.lineTo(canvas.width-sideValue, canvas.height-sideValue);
+	ctx.stroke();
+
+	var transFunction = createTransform(tempDomain, [sideValue,canvas.height-sideValue])
+
+	// Draw ticks for the right temperatures
+	for(i=tempDomain[0]; i>=tempDomain[1]; i=i-50) {
+		var tick = transFunction(i)
+		ctx.moveTo(sideValue-15, tick);
+		ctx.lineTo(sideValue, tick);
+		ctx.stroke();
+		ctx.fillText(i, sideValue-35, tick);
+	}
+
+	// Write the title
+	ctx.font="30px Verdana";
+	ctx.fillText("Maximum Temperature in De Bilt (NL)",canvas.width/3,40, canvas.width/3*2-canvas.width/3);
+}
+// Draw the ticks on the horizontal axis
+function drawTicks(canvas, point, transformDates, monthNum, sideValue){
+	var ctx = canvas.getContext("2d");
+	var month
+	// Translate the numerical values of each date to their linguistic form
+	switch(monthNum) {
+		case 0:
+			month = 'January'
+			break;
+		case 1:
+			month = 'February'
+			break;
+		case 2:
+			month = 'March'
+			break;
+		case 3:
+			month = 'April'
+			break;
+		case 4:
+			month = 'May'
+			break;
+		case 5:
+			month = 'June'
+			break;
+		case 6:
+			month = 'July'
+			break;
+		case 7:
+			month = 'August'
+			break;
+		case 8:
+			month = 'September'
+			break;
+		case 9:
+			month = 'October'
+			break;
+		case 10:
+			month = 'November'
+			break;
+		case 11:
+			month = 'December'
+			break;
+		default:
+			month = 'ERROR'
+	}
+
+	// Write and draw the ticks and texts
+	ctx.moveTo(point, canvas.height-sideValue);
+	ctx.lineTo(point, canvas.height-sideValue+15);
+	ctx.stroke();
+	ctx.fillText(month, point+10, canvas.height-sideValue+25)
+
+}
+
+
+// This functions start the with getting the data and drawing the function
 function main(){
 	var data = getData();
-	var dates = data[0];
-	var temps = data[1];
-	canvasFunction(dates, temps);
+	canvasFunction(data[0], data[1]);
 }
 
+// Function that should wait on loading the KNMI.txt and afterwards creating the graph
+function xmlRequest(){
+	var http = new XMLHttpRequest();
+	http.onreadystatechange = function(){
+		if(http.readyState == 4 && http.status == 200){
+			loadXMLDoc();
+			console.log(http);
+		}
+	};
+	http.open("GET", "KNMI.txt", false);
+	http.send();
+	main()
+}
