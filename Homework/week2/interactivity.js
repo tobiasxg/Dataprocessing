@@ -26,7 +26,7 @@ function interactivity(transformX, transformY){
 		valueY = Math.round(transformY(mousePos.y));
 		valueX = Math.round(transformX(mousePos.x));
 		// Check if it is in the canvas
-		if(valueX <= numDays && valueX >= 0 && valueY <= tempDomain[0] && valueY >= tempDomain[1]){
+		if(valueX < numDays && valueX > 0 && valueY <= tempDomain[0] && valueY >= tempDomain[1]){
 			// Line to print with date and temperature
 			document.getElementById('tempOnDay').innerHTML = 'Temperature is ' + valueY + ' on day ' + dates[valueX];
 		}
