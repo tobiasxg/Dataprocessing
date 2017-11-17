@@ -23,7 +23,7 @@ function main(){
 
 	// Values y and x for axis
 	var y = d3.scale.ordinal()
-		.rangeRoundBands([0, height], .1);
+		.rangeRoundBands([9, height], .1);
 	var x = d3.scale.linear()
 		.range([0, width]);
 
