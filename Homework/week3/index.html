@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+	<title>D3 Chart of JSON</title>
+	<h3 id="changeable">D3 Chart</h3>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+
+	<script>
+
+	function main(){
+var margin = {
+    top: 20,
+    right: 20,
+    bottom: 30,
+    left: 40
+},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+
+var y = d3.scale.ordinal()
+    .rangeRoundBands([0, height], .1);
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+var xScaling = d3.scale.linear()
+			.domain([0,width])
+			.range([0,width])
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("top")
+    .ticks(10)
+    .scale(xScaling);
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var color = d3.scale.category20c();
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		d3.json("Pokemon.json", function (data) {
+			console.log(data[0]);
+
+
+			x.domain([0, d3.max(data, function(d) {
+				return d.frequency;
+			})]);
+			y.domain(data.map(function(d) {
+				return d.letter;
+			}));
+
+		
+
+			svg.selectAll("rect")
+				.data(data)
+				.enter()
+					.append("rect")
+					.attr("width", function (d) { return d.Total; })
+					.attr("height", 45)
+					.attr("y", function (d, i) { return i * 50; })
+					.attr("fill", "blue")
+					.on("mouseover", function() {
+						d3.select(this)
+						.attr("fill", "red");
+					})
+					.on("mouseout", function() {
+						d3.select(this)
+						.attr("fill", "blue");
+					})
+
+			svg.selectAll("text")
+				.data(data)
+				.enter()
+					.append("text")
+					.attr("fill", "white")
+					.attr("y", function (d, i) { return i * 50 + 24; })
+					.text(function (d) {return d.Name; })
+
+			svg.append("g")
+				.attr("class", "y axis")
+				.call(yAxis);
+
+			svg.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + height + ")")
+				.call(xAxis)
+				.append("text")
+				.attr("transform", "rotate(0)")
+				.attr("y", 6)
+				.attr("dy", "1.91em")
+				.style("text-anchor", "start")
+				.text("Frequency");
+
+				
+		})
+	}
+
+	main();
+
+	d3.select("body").append("h1").html("My beautiful text")
+
+		var w = 500;
+		var h = 1000;
+		var x_border = 50
+		var y_border = 30
+		var thickness = 50
+		var x_axis_border = 25
+		var data = [28,35,28,23]
+		var max_data = Math.max.apply(Math, data);
+		var min_data = Math.min.apply(Math, data);
+		var ratio = (w-x_border)/max_data
+
+		var scaling = d3.scale.linear()
+			.domain([0,(w-x_border)/ratio])
+			.range([0,w-x_border])
+
+		var axis = d3.svg.axis()
+			.ticks(10)
+			.scale(scaling);
+
+		d3.select("body").append("h2").html(ratio)
+		var names = ["Alexis Sanchez", "Petr Cech", "Mesut Ozil", "Alex Oxlade-Chamberlain"]
+		var canvas = d3.select("body").append("svg")
+			.attr("width", w)
+			.attr("height", h)
+			.attr("style", "border:1px solid #d3d3d3;")
+			.append("g")
+			.attr("transform", "translate("+x_border+","+y_border+")");
+
+		canvas.selectAll("rect")
+			.data(data)
+			.enter()
+				.append("rect")
+				.attr("transform", "translate(0,"+x_axis_border+")")
+				.attr("width", function (d) { return d*ratio; })
+				.attr("height", thickness*0.9)
+				.attr("y", function (d, i) { return i*thickness; })
+				.attr("fill", "blue")
+				.on("mouseover", function() {
+					    d3.select(this)
+					    	.attr("fill", "red");
+				})
+				.on("mouseout", function(d, i) {
+					    d3.select(this)
+					    	.attr("fill", "blue");
+				});
+
+
+		canvas.selectAll("text")
+			.data(names)
+			.enter()
+				.append("text")
+				.attr("fill", "white")
+				.attr("y", function (n, i) { return i*thickness+thickness/2+x_axis_border*1.5; })
+				.text(function (n) { return n; });
+
+		canvas.append("g")
+			.attr("x", 2000)
+			.call(axis)
+
+
+
+	</script>
+
+ <button onclick="main()">Click me</button> 
+
+</body>
+</html>
