@@ -6,6 +6,9 @@
 * Used sources:
 * http://bl.ocks.org/phil-pedruco/9032348
 * https://www.youtube.com/watch?v=ljeKVFsaYBg
+* No css file is used. The design choices in margin are based on the data
+* so it is represented in a (semi-)pretty manner. The x-axis is on top for
+* as the used file is large, so if it is on the bottom you won't see it.
 */
 
 // Main function done all within one, as it is mostly initialising variables
