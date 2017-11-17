@@ -3,10 +3,6 @@
 * html file for the assignment of the third week.
 * This code uses certain keys from the JSON files and these keys should be
 * changed when using different JSON files.
-* No css file is used. The design choices in margin are based on the data
-* so it is represented in a (semi-)pretty manner. The x-axis is on top for
-* as the used file is large, so if it is on the bottom you won't see it.
-* Used sources:
 * http://bl.ocks.org/phil-pedruco/9032348
 * https://www.youtube.com/watch?v=ljeKVFsaYBg
 */
