@@ -53,7 +53,7 @@ function main(){
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	// Reading in the json file
-	d3.json("Pokemon.json", function (data) {
+	d3.json("Original_Pokemon.json", function (data) {
 		// Drawing the rectangles on the right place and mouse events
 		svg.selectAll("rect")
 			.data(data)
