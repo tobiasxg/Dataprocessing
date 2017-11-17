@@ -1,7 +1,11 @@
+# Tobias Garritsen, 10779582
+# Converts csv files to JSON files.
+
 import sys
 
-
-def convertToCSV(filename):
+# The converter function loops over all and writes eacht row of the csv in the
+# right format.
+def convertToJSON(filename):
 	try:
 		csvfile = open(filename,'rb')
 		jsonFilename = filename.split('.')[0]+'.json'
@@ -24,13 +28,11 @@ def convertToCSV(filename):
 			indexes[i] = indexes[i].replace('\n','')
 			jsonString = jsonString + '"' + indexes[i] + '" : "' + key + '",\n'
 		jsonString = jsonString[:-2] + '\n},\n'
-		#jsonfile.write(row)
 	jsonfile.write(jsonString[:-2]+'\n]')
-		
-	print indexes
 
 
+# Accepts multiple files and converts them all
 if __name__ == '__main__':
 	filenames = sys.argv[1:]
 	for filename in filenames:
-		convertToCSV(filename)
+		convertToJSON(filename)
