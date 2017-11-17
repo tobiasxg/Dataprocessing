@@ -16,7 +16,7 @@ function main(){
 		left: 20
 	},
 		width = 850,
-		height = 1000 - margin.top;
+		height = 5310 - margin.top;
 
 	// Margin of the rectangles
 	var rectWidth = 35;
