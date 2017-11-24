@@ -1,0 +1,141 @@
+Country,Birth,Death,Income,Continent
+Afghanistan,34.1,7.7,213.58,Asia
+Albania,12.9,9.4,434.19,Europe
+Algeria,24.3,5.7,346.48,Africa
+Andorra,8.9,8.4,2731.12,Europe
+Angola,44.1,13.9,2650.03,Africa
+Argentina,16.8,7.6,1018.58,South-Africa
+Armenia,13.7,12.6,312.89,Asia
+Australia,13.2,6.4,3780.69,Oceania
+Austria,9.5,9,2457.33,Europe
+Azerbaijan,17.8,6.3,524.84,Asia
+Bahrain,15.2,2.2,1226.79,Asia
+Bangladesh,20,5.7,340.22,Asia
+Barbados,12.7,6.4,1625.00,North-America
+Belarus,11,13.5,502.19,Europe
+Belgium,11.7,9.9,2564.89,Europe
+Belize,23.4,4,1441.00,North-America
+Bosnia and Herzegovina,9,9.4,562.45,Europe
+Botswana,23.6,7.2,528.84,Africa
+Brazil,14.9,6.1,757.92,South-Africa
+Bulgaria,9.6,14.2,506.76,Europe
+Burundi,44.7,11.1,256.25,Africa
+Cambodia,25.7,5.7,243.94,Asia
+Cameroon,37.3,10.8,466.74,Africa
+Canada,11.3,7.2,2773.50,North-America
+Chile,13.9,5.4,949.50,South-America
+China,13.3,7.2,731.14,Asia
+Colombia,18.8,4.2,474.66,South-America
+Costa Rica,15.1,4.4,779.04,North-America
+Croatia,9.5,11.1,869.71,Europe
+Cuba,9.5,8.5,25.05,North-America
+Cyprus,11.5,5.5,1618.85,Europe
+Democratic Republic of the Congo,42.7,13.7,351.83,Africa
+Denmark,11.3,9.6,3269.62,Europe
+Dominica,15.6,7.2,513.89,North-America
+Dominican Republic,20.8,5.9,491.37,North-America
+Ecuador,20.8,5.3,359.29,South-America
+Egypt,23.2,6.4,264.33,Africa
+El Salvador,20.1,6.6,365.00,North-America
+Equatorial Guinea,35.4,11.5,1087.50,Africa
+Estonia,10.9,11.3,914.97,Europe
+Ethiopia,33,7.2,249.00,Africa
+Fiji,20.4,6.9,710.22,Oceania
+Finland,11.2,9.4,2924.10,Europe
+France,12.3,8.7,2761.99,Europe
+Gabon,31.9,9,1704.12,Africa
+Gambia,42.7,8.2,39.37,Africa
+Georgia,13.3,11.5,299.37,Europe
+Germany,8.5,10.6,2851.85,Europe
+Ghana,30.9,8.1,351.22,Africa
+Greece,9.7,9.7,953.44,Europe
+Grenada,19.3,6.9,1250.00,North-America
+Guatemala,31,5.2,570.79,North-America
+Guyana,20.3,7.9,209.33,South-America
+Haiti,25.6,8.6,712.50,North-America
+Honduras,25.8,4.5,522.86,North-America
+Hungary,9.9,13,667.58,Europe
+Iceland,14.5,6.2,2176.15,Europe
+India,20.4,7.9,452.11,Asia
+Indonesia,18.8,6.2,304.25,Asia
+Iraq,31.1,4.8,572.85,Asia
+Ireland,15.4,5.9,2991.21,Europe
+Israel,20.3,5.1,1874.63,Asia
+Italy,9.2,9.5,2117.76,Europe
+Jamaica,18,7.1,1080.44,North-America
+Japan,8.4,9.5,2782.43,Asia
+Jordan,27,3.7,636.99,Asia
+Kazakhstan,20.5,9.7,614.24,Asia
+Kenya,34.9,8.3,481.21,Africa
+Kuwait,20.6,1.9,2236.71,Asia
+Kyrgyzstan,27.1,6.6,350.00,Asia
+Latvia,11,14.2,713.11,Europe
+Lebanon,13.4,4.4,937.16,Asia
+Lesotho,27.5,14.1,1017.82,Africa
+Libya,20.7,4.2,644.09,Africa
+Lithuania,11.3,12,701.28,Europe
+Luxembourg,11.6,6.8,4479.80,Europe
+Madagascar,34.7,7,533.33,Africa
+Malawi,39.8,9,1098.99,Africa
+Malaysia,17.7,5,979.60,Asia
+Maldives,22,3.5,627.30,Asia
+Mali,47.1,11.2,400.00,Africa
+Malta,9.2,7.5,1562.20,Europe
+Mauritius,11.5,7.4,1337.74,Africa
+Mexico,18.4,5.3,729.94,North-America
+Monaco,6.8,8.7,4142.78,Europe
+Mongolia,22.7,6.7,464.89,Asia
+Montenegro,11.6,9.5,589.82,Europe
+Morocco,22.7,6.4,415.59,Africa
+Mozambique,38.9,11.8,757.22,Africa
+Namibia,26,5.7,633.02,Africa
+Nepal,21,6.6,166.49,Asia
+Netherlands,10.7,8.3,2937.58,Europe
+New Zealand,13.8,6.3,2693.05,Oceania
+Nicaragua,22.7,4.8,592.50,North-America
+Nigeria,41.2,11.9,731.68,Africa
+Norway,12.4,8.1,4215.43,Europe
+Oman,20.9,2.8,2087.14,Asia
+Pakistan,25.2,7.3,239.31,Asia
+Panama,19.4,5,770.21,North-America
+Papua New Guinea,28.9,7.7,274.10,Oceania
+Paraguay,23.7,4.8,425.61,South-America
+Peru,19.7,4.4,492.13,South-America
+Philippines,24.4,5.9,330.73,Asia
+Poland,10.8,10,905.62,Europe
+Portugal,8.7,9.1,1081.73,Europe
+Qatar,11,1.3,4038.08,Asia
+Romania,10.3,11.8,487.08,Europe
+Rwanda,35.2,6.4,460.00,Asia
+Saint Lucia,15.4,7,421.11,Europe
+Samoa,26.2,5.2,63.82,Oceania
+Saudi Arabia,19.4,3.2,1786.07,Asia
+Senegal,37.7,7,200.00,Africa
+Serbia,9.7,11.9,507.08,Europe
+Seychelles,16.6,6.7,267.21,Africa
+Singapore,9.9,4.5,2759.38,Asia
+Slovakia,10.7,9.4,947.95,Europe
+Slovenia,10,9.1,1275.66,Europe
+Somalia,43.8,12.7,350.00,Africa
+South Africa,20.9,11.1,1400.01,Africa
+Spain,10.4,8.2,1635.15,Europe
+Sri Lanka,17.9,6.6,352.62,Asia
+Sudan,33.5,7.8,650.00,Africa
+Suriname,17.7,4.6,808.02,South-America
+Swaziland,29.9,11.8,786.93,Africa
+Sweden,12,9.6,3181.11,Europe
+Switzerland,10.4,7.7,6301.73,Europe
+Tajikistan,33,6,187.27,Asia
+Thailand,10.2,7.6,502.78,Asia
+Trinidad and Tobago,14.5,9.6,719.49,South-America
+Tunisia,17.2,5.5,393.03,Africa
+Turkey,16.8,5.7,756.06,Europe
+Turkmenistan,21.3,8.8,373.33,Asia
+Uganda,43.2,9.2,379.79,Africa
+Ukraine,10.8,15.1,357.71,Europe
+United Arab Emirates,14.5,1.1,3081.34,Asia
+Uruguay,14.5,9.1,862.60,South-America
+Uzbekistan,21.5,6.4,360.72,Asia
+Yemen,31.1,6.7,229.00,Asia
+Zambia,42.8,9.7,4330.98,Africa
+Zimbabwe,31.3,9.8,500.00,Africa
