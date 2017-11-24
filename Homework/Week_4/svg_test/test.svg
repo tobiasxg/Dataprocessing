@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 179 295.5" style="enable-background:new 0 0 179 295.5;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;stroke:#020203;stroke-miterlimit:10;}
+	.st100{fill:#ccece6;stroke:#1E1E1C;stroke-miterlimit:10;}
+	.st1000{fill:#99d8c9;stroke:#1E1E1C;stroke-miterlimit:10;}
+	.st10000{fill:#66c2a4;stroke:#1E1E1C;stroke-miterlimit:10;}
+	.st100000{fill:#41ae76;stroke:#1E1E1C;stroke-miterlimit:10;}
+	.st1000000{fill:#238b45;stroke:#1E1E1C;stroke-miterlimit:10;}
+	.st10000000{fill:#005824;stroke:#1E1E1C;stroke-miterlimit:10;}
+	.st10000000{fill:#EEEEEE;stroke:#1E1E1C;stroke-miterlimit:10;}
+	.stUnknown{fill:#EEEEEE;stroke:#1E1E1C;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#1E1E1C;stroke-miterlimit:10;}
+
+</style>
+<rect id="canvas" x="1.5" y="1.5" class="st0" width="175.1" height="291.4"/>
+<rect id="kleur1" x="13" y="10" class="st100" width="21" height="29"/>
+<rect id="kleur2" x="13" y="50" class="st1000" width="21" height="29"/>
+<rect id="kleur3" x="13" y="90" class="st10000" width="21" height="29"/>
+<rect id="kleur4" x="13" y="130" class="st100000" width="21" height="29"/>
+<rect id="kleur5" x="13" y="170" class="st1000000" width="21" height="29"/>
+<rect id="kleur6" x="13" y="210" class="st10000000" width="21" height="29"/>
+<rect id="kleur7" x="13" y="250" class="stUnknown" width="21" height="29"/>
+<rect id="tekst1" x="46.5" y="10" class="st2" width="119.1" height="29"/>
+<rect id="tekst2" x="46.5" y="50" class="st2" width="119.1" height="29"/>
+<rect id="tekst3" x="46.5" y="90" class="st2" width="119.1" height="29"/>
+<rect id="tekst4" x="46.5" y="130" class="st2" width="119.1" height="29"/>
+<rect id="tekst5" x="46.5" y="170" class="st2" width="119.1" height="29"/>
+<rect id="tekst6" x="46.5" y="210" class="st2" width="119.1" height="29"/>
+<rect id="tekst7" x="46.5" y="250" class="st2" width="119.1" height="29"/>
+<text id="label1" x="46.5" y="32" font-family="Verdana" font-size="15">100</text>
+<text id="label2" x="46.5" y="72" font-family="Verdana" font-size="15">1000</text>
+<text id="label3" x="46.5" y="112" font-family="Verdana" font-size="15">10000</text>
+<text id="label4" x="46.5" y="152" font-family="Verdana" font-size="15">100000</text>
+<text id="label5" x="46.5" y="192" font-family="Verdana" font-size="15">1000000</text>
+<text id="label6" x="46.5" y="232" font-family="Verdana" font-size="15">10000000</text>
+<text id="label7" x="46.5" y="272" font-family="Verdana" font-size="15">Unknown Data</text>
+</svg>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<title>Scatterplot Dataprocessing</title>
+
+</head>
+<body>
+   <h4>Tobias Garritsen</h4>
+   <h1>Dataprocessing Assignment 4, Scatterplot</h1>
+   <h2>Sources for data</h2>
+
+
+<script>
+d3.xml("test.svg", "image/svg+xml", function(error, xml) {
+    if (error) throw error;    
+    document.body.appendChild(xml.documentElement);    
+});
+</script>
+</body>
