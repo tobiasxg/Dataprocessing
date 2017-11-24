@@ -6,7 +6,7 @@ When hovering over the dots with the mouse, the data name (countries) is shown.
 Everything is put in a main function as most part is taken from the given link.
 */
 
-function main() {
+window.onload = function() {
 
 	var margin = {top: 20, right: 20, bottom: 30, left: 40},
 	    width = 960 - margin.left - margin.right,
