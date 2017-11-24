@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+body {
+  font: 10px sans-serif;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.dot {
+  stroke: #000;
+}
+</style>
+<head>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="scatterplot.js"></script>
+<title>Scatterplot Dataprocessing</title>
+
+</head>
+<body>
+   <h4>Tobias Garritsen</h4>
+   <h1>Dataprocessing Assignment 4, Scatterplot</h1>
+   <div>
+     <a>For svg test link click </a>
+     <a href="https://tobiasxg.github.io/Dataprocessing/Homework/Week_4/svg_test">here</a>
+   </div>
+   <h2>Sources for data</h2>
+   <div>
+      <a href="http://www.nationmaster.com/country-info/stats/Cost-of-living/Average-monthly-disposable-salary/After-tax#country">NationMaster</a>
+   </div>
+   <div>
+      <a href="http://apps.who.int/gho/data/view.main.CBDR2040">World Health Organization</a>
+   </div>
+   <div>
+      <h2>Graph displaying all countries shown by birth date (x-axis), death rate (y-axis), average annual income (dot size) and continent (colour).</h2>
+   </div>
+</body>
