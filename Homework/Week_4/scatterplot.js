@@ -34,6 +34,8 @@ function main() {
 	  .append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+	var txtSize = 25;
+
 	d3.csv("data3.csv", function(error, data) {
 	  if (error) throw error;
 
@@ -88,12 +90,22 @@ function main() {
 		          y: y(d.Death)
 		    })
 		    .text(d.Country)
-                    .attr("font-size", "20px");})
+                    .attr("font-size", txtSize);
+		    svg.append("text").attr({
+		          // This id makes removing the text easier
+		          // I used split and join as spaces create id problems
+		          id: "id2" + d.Country.split(" ").join(''), 
+		          x: x(d.Birth)+Math.sqrt(d.Income/3),
+		          y: y(d.Death)+txtSize
+		    })
+		    .text("$" + d.Income)
+                    .attr("font-size", txtSize);})
 	      // When mouse not over dot, remove country name and restore dotsize
 	      .on("mouseout", function(d) {
 		    d3.select(this)
 		    .attr("r", function(d) { return Math.sqrt(d.Income/200)*4; });
 		    d3.select("#id" + d.Country.split(" ").join('')).remove();
+		    d3.select("#id2" + d.Country.split(" ").join('')).remove();
 	      });
 
 	  var legend = svg.selectAll(".legend")
