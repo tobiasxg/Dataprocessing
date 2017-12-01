@@ -117,7 +117,7 @@ function create_graph() {
 		.attr("y", 0)
                 .attr("font-size", 25)
 		.style("text-anchor", "middle")
-		.text("Temperature per day 2015");
+		.text(station+ " Temperature per day 2015");
 
 	// add the x-axis
 	svg.append("g")
