@@ -2,6 +2,11 @@
 The following script creates a graph with three variables.
 A crosshair is shown over the graph when hovering with the mouse over it.
 A dropdown menu is added and this is used for other datapoints.
+
+
+https://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript
+https://jsfiddle.net/xrf1ro1a/
+https://bl.ocks.org/basilesimon/29efb0e0a43dde81985c20d9a862e34e
 */
 
 window.onload = set_dropdown();
@@ -46,6 +51,9 @@ function create_graph() {
 	function draw(data, station) {
 
 	var data = data[station];
+
+	var legend_title = ["Max temperature", "Avg temperature", "Min temperature"]
+	var legend_color = ["red", "green", "blue"]
 
 	// format the data
 	data.forEach(function(d) {
@@ -137,8 +145,17 @@ function create_graph() {
 			vertical_line.attr("opacity", 0);
 			horizontal_line.attr("opacity", 0);
 		});
-	}
 
+	// Add the Legend
+	for (i = 0; i < 3; i++) { 
+		svg.append("text")
+			.attr("x", width*0.85)
+			.attr("y", 20*i)
+			.attr("class", "legend")
+			.style("fill", legend_color[i])
+			.text(legend_title[i]);
+	}
+	}
 	// Get the data
 	d3.json("KNMI_lely_bilt.json", function(error, data) {
 		if (error) throw error;
