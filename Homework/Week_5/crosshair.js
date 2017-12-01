@@ -13,7 +13,7 @@ window.onload = set_dropdown();
 
 function create_graph() {
 	// set the dimensions and margins of the graph
-	var margin = {top: 20, right: 20, bottom: 30, left: 50},
+	var margin = {top: 20, right: 20, bottom: 50, left: 50},
 		width = 960 - margin.left - margin.right,
 		height = 500 - margin.top - margin.bottom;
 
@@ -97,14 +97,46 @@ function create_graph() {
 		.attr("d", maximum_line)
 		.attr('stroke', "red");
 
+	svg.append("g")
+	      .attr("class", "title")
+	      .append("text")
+		.attr("class", "label")
+		.attr("x", width/2)
+		.attr("y", 0)
+                .attr("font-size", 25)
+		.style("text-anchor", "middle")
+		.text("Temperature per day 2015");
+
 	// Add the x-axis
 	svg.append("g")
 		.attr("transform", "translate(0," + height + ")")
 		.call(d3.axisBottom(x));
 
+	// Add x-axis label
+	svg.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + height + ")")
+	      .append("text")
+		.attr("class", "label")
+		.attr("x", width)
+		.attr("y", 40)
+		.style("text-anchor", "end")
+		.text("Time");
+
 	// Add the y-axis
 	svg.append("g")
 		.call(d3.axisLeft(y));
+
+	// Add y-axis label
+	svg.append("g")
+	      .attr("class", "y axis")
+	    .append("text")
+	      .attr("class", "label")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", -50)
+	      .attr("dy", ".71em")
+	      .style("text-anchor", "end")
+	      .text("Temperature (in 0.1 graden Celsius)")
 
 	// Create extra field for the crosshair
 	var crosshair_svg = svg.append("rect")
@@ -133,11 +165,11 @@ function create_graph() {
 		.attr("pointer-events", "none");
 
 	// Create mousemovement on crosshair svg
+	// It won't accept .append("text") (in any form)
 	crosshair_svg.on("mousemove", function(){
 		mouse = d3.mouse(this);
 		mousex = mouse[0];
 		mousey = mouse[1];
-//		console.log(data[mousex])
 		vertical_line.attr("x1", mousex).attr("x2", mousex).attr("opacity", 1);
 		horizontal_line.attr("y1", mousey).attr("y2", mousey).attr("opacity", 1)
 		})
