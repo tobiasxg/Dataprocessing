@@ -201,7 +201,7 @@ function create_graph() {
 			mouse = d3.mouse(this);
 			mousex = mouse[0];
 			mousey = mouse[1];
-			index_calc = Math.round(mousex/(width/d_i))
+			index_calc = Math.floor(mousex/(width/d_i))
 			processed_day = day_list[index_calc].toString().split(" 00:00:00")[0]
 			day_text.attr("x",mousex).attr("y",mousey+20).attr("opacity", 1).text(processed_day)
 			max_text.attr("x",mousex).attr("y",mousey+40).attr("opacity", 1).text(TX_list[index_calc])
