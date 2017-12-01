@@ -136,7 +136,7 @@ function create_graph() {
 	      .attr("y", -50)
 	      .attr("dy", ".71em")
 	      .style("text-anchor", "end")
-	      .text("Temperature (in 0.1 graden Celsius)")
+	      .text("Temperature (in 0.1 degree Celsius)")
 
 	// Create extra field for the crosshair
 	var crosshair_svg = svg.append("rect")
