@@ -13,7 +13,7 @@ window.onload = set_dropdown();
 
 function create_graph() {
 	// set the dimensions and margins of the graph
-	var margin = {top: 20, right: 20, bottom: 50, left: 50},
+	var margin = {top: 20, right: 180, bottom: 50, left: 50},
 		width = 960 - margin.left - margin.right,
 		height = 500 - margin.top - margin.bottom;
 
@@ -55,7 +55,14 @@ function create_graph() {
 	var legend_title = ["Max temperature", "Avg temperature", "Min temperature"]
 	var legend_color = ["red", "green", "blue"]
 
-	// format the data
+	// empty lists to be filled, useful for finding data later
+	var TG_list = [];
+	var TN_list = [];
+	var TX_list = [];
+	var day_list = [];
+	var d_i = 0;
+
+	// format the data and lists
 	data.forEach(function(d) {
 		ymd = d.YYYYMMDD
 		year = ymd.substring(0,4);
@@ -65,6 +72,11 @@ function create_graph() {
 		d.TG = +d.TG;
 		d.TN = +d.TN;
 		d.TX = +d.TX;
+		TG_list[d_i] = d.TG;
+		TN_list[d_i] = d.TN;
+		TX_list[d_i] = d.TX;
+		day_list[d_i] = d.YYYYMMDD;
+		d_i++;
 	});
 
 	// sort years ascending
@@ -72,15 +84,15 @@ function create_graph() {
 		return a["YYYYMMDD"]-b["YYYYMMDD"];
 	})
 
-	// Scale the range of the data
+	// scale the range of the data
 	x.domain(d3.extent(data, function(d) { return d.YYYYMMDD; }));
 
-	// Minimal and maximal values for y with extra space for a prettier outlook using floor and ceil
+	// minimal and maximal values for y with extra space for a prettier outlook using floor and ceil
 	minimal_y = d3.min(data, function(d) { return Math.min(d.TG, d.TN, d.TX); }); 
 	maximal_y = d3.max(data, function(d) { return Math.max(d.TG, d.TN, d.TX); });
 	y.domain([Math.floor(minimal_y/100)*100, Math.ceil(maximal_y/100)*100]);
 
-	// Add the three different variables
+	// add the three different variables
 	svg.append("path")
 		.data([data])
 		.attr("class", "line")
@@ -107,12 +119,12 @@ function create_graph() {
 		.style("text-anchor", "middle")
 		.text("Temperature per day 2015");
 
-	// Add the x-axis
+	// add the x-axis
 	svg.append("g")
 		.attr("transform", "translate(0," + height + ")")
 		.call(d3.axisBottom(x));
 
-	// Add x-axis label
+	// add x-axis label
 	svg.append("g")
 		.attr("class", "x axis")
 		.attr("transform", "translate(0," + height + ")")
@@ -123,11 +135,11 @@ function create_graph() {
 		.style("text-anchor", "end")
 		.text("Time");
 
-	// Add the y-axis
+	// add the y-axis
 	svg.append("g")
 		.call(d3.axisLeft(y));
 
-	// Add y-axis label
+	// add y-axis label
 	svg.append("g")
 	      .attr("class", "y axis")
 	    .append("text")
@@ -136,9 +148,9 @@ function create_graph() {
 	      .attr("y", -50)
 	      .attr("dy", ".71em")
 	      .style("text-anchor", "end")
-	      .text("Temperature (in 0.1 degree Celsius)")
+	      .text("Temperature (in 0.1 graden Celsius)")
 
-	// Create extra field for the crosshair
+	// create extra field for the crosshair
 	var crosshair_svg = svg.append("rect")
 		.attr("x", 0)
 		.attr("y", 0)
@@ -146,7 +158,7 @@ function create_graph() {
 		.attr("height", height)
 		.attr("opacity", 0);
 
-	// Add horizontal crosshair line
+	// add horizontal crosshair line
 	var horizontal_line = svg.append("line")
 		.attr("opacity", 0)
 		.attr("x1", 0)
@@ -155,7 +167,7 @@ function create_graph() {
 		.attr("stroke-width", 1)
 		.attr("pointer-events", "none");
 
-	// Add vertical crosshair line
+	// add vertical crosshair line
 	var vertical_line = svg.append("line")
 		.attr("opacity", 0)
 		.attr("y1", 0)
@@ -164,21 +176,50 @@ function create_graph() {
 		.attr("stroke-width", 1)
 		.attr("pointer-events", "none");
 
-	// Create mousemovement on crosshair svg
-	// It won't accept .append("text") (in any form)
-	crosshair_svg.on("mousemove", function(){
-		mouse = d3.mouse(this);
-		mousex = mouse[0];
-		mousey = mouse[1];
-		vertical_line.attr("x1", mousex).attr("x2", mousex).attr("opacity", 1);
-		horizontal_line.attr("y1", mousey).attr("y2", mousey).attr("opacity", 1)
+	// works similar to the vertical/horizontal lines but with text
+	var day_text = svg.append("text")
+		.attr("opacity", 0)
+		.attr("stroke", "black")
+		.attr("stroke-width", 1);
+	var max_text = svg.append("text")
+		.attr("opacity", 0)
+		.attr("stroke", "red")
+		.attr("stroke-width", 1);
+	var avg_text = svg.append("text")
+		.attr("opacity", 0)
+		.attr("stroke", "green")
+		.attr("stroke-width", 1);
+	var min_text = svg.append("text")
+		.attr("opacity", 0)
+		.attr("stroke", "blue")
+		.attr("stroke-width", 1);
+
+
+	// create mousemovement on crosshair svg
+	crosshair_svg.data(data)
+		.on("mousemove", function(data,i){
+			mouse = d3.mouse(this);
+			mousex = mouse[0];
+			mousey = mouse[1];
+			index_calc = Math.round(mousex/(width/d_i))
+			processed_day = day_list[index_calc].toString().split(" 00:00:00")[0]
+			day_text.attr("x",mousex).attr("y",mousey+20).attr("opacity", 1).text(processed_day)
+			max_text.attr("x",mousex).attr("y",mousey+40).attr("opacity", 1).text(TX_list[index_calc])
+			avg_text.attr("x",mousex).attr("y",mousey+60).attr("opacity", 1).text(TG_list[index_calc])
+			min_text.attr("x",mousex).attr("y",mousey+80).attr("opacity", 1).text(TN_list[index_calc])
+			vertical_line.attr("x1", mousex).attr("x2", mousex).attr("opacity", 1);
+			horizontal_line.attr("y1", mousey).attr("y2", mousey).attr("opacity", 1)
 		})
-		.on("mouseout", function(){  
+		.on("mouseout", function(){
+			day_text.attr("opacity", 0);
+			max_text.attr("opacity", 0);
+			avg_text.attr("opacity", 0);
+			min_text.attr("opacity", 0);
 			vertical_line.attr("opacity", 0);
 			horizontal_line.attr("opacity", 0);
 		});
 
-	// Add the Legend
+	// add the Legend
 	for (i = 0; i < 3; i++) { 
 		svg.append("text")
 			.attr("x", width*0.85)
@@ -188,7 +229,7 @@ function create_graph() {
 			.text(legend_title[i]);
 	}
 	}
-	// Get the data
+	// get the data
 	d3.json("KNMI_lely_bilt.json", function(error, data) {
 		if (error) throw error;
 		// Get right value from the dropdown menu
@@ -198,6 +239,7 @@ function create_graph() {
 	});
 }
 
+// Set the location_title to the chosen item from the menu
 function get_menu_value() {
 	var e = document.getElementById("location");
 	var location = e.options[e.selectedIndex].text;
