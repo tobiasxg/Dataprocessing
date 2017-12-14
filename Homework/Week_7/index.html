@@ -3,6 +3,7 @@
 	<meta charset="utf-8">
 	<script src="https://d3js.org/d3.v3.min.js"></script>
 	<script src="https://d3js.org/topojson.v1.min.js"></script>
+	<script src="http://d3js.org/queue.v1.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="map.js"></script>
 </head>
@@ -15,10 +16,17 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-5" id="map">
-      <h3>Partij met meeste stemmen per provincie</h3>
+      <h3>Aantal stemmen per partij per provincie (x1000)</h3>
+<select name="party" id="party" class="icon-menu" onchange="change_map()"></select>
     </div>
     <div class="col-sm-7" id="chart">
-      <h3>Verkiezingsuitslagen 2017 per provincie</h3>
+      <h3>Verkiezingsuitslagen Tweede Kamer per provincie in 2017</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3" id="chart">
+      <h3>Bronnen</h3>
+        <a href="https://www.kiesraad.nl/verkiezingen/adviezen-en-publicaties/publicaties/2017/uitslagen/uitslagen-tweede-kamerverkiezing-2017/uitslagen-tweede-kamerverkiezing-2017">Kiesraad.nl</a>
     </div>
   </div>
 </div>
