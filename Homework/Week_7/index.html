@@ -1,32 +1,39 @@
+<!--Tobias Garritsen, 10779582-->
 <!DOCTYPE html>
 <head>
-	<meta charset="utf-8">
-	<script src="https://d3js.org/d3.v3.min.js"></script>
-	<script src="https://d3js.org/topojson.v1.min.js"></script>
-	<script src="https://d3js.org/queue.v1.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="map.js"></script>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
+  <script src="http://d3js.org/queue.v1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="map.js"></script>
 </head>
 <body>
 <div class="jumbotron text-center">
-	<h1>Nederlandse Verkiezingen 2017</h1>
-	<p>Voor de grootste partijen</p> 
+  <h1>Nederlandse Verkiezingen 2017</h1>
+  <p>Voor de grootste partijen</p> 
 </div>
 
 <div class="container">
   <div class="row">
     <div class="col-sm-5" id="map">
       <h3>Aantal stemmen per partij per provincie (x1000)</h3>
-<select name="party" id="party" class="icon-menu" onchange="change_map()"></select>
+      <select name="party" id="party" class="icon-menu" onchange="changeMap()"></select>
     </div>
     <div class="col-sm-7" id="chart">
       <h3>Verkiezingsuitslagen Tweede Kamer per provincie in 2017</h3>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-3" id="chart">
-      <h3>Bronnen</h3>
-        <a href="https://www.kiesraad.nl/verkiezingen/adviezen-en-publicaties/publicaties/2017/uitslagen/uitslagen-tweede-kamerverkiezing-2017/uitslagen-tweede-kamerverkiezing-2017">Kiesraad.nl</a>
+    <div class="col-sm-12" id="storytelling">
+      <h3 name="storytelling">Storytelling</h3>
+      <div>Deze twee datagrafieken laten de verkiezingsuitslagen van de Tweede kamer zien van het jaar 2017. De linkergrafiek, de landkaart van Nederland, laat zien hoeveel stemmen een bepaalde partij heeft gekregen van een elke provincie. Dit is gedaan met 20 stappen die variëren van 0 stemmen tot 500000, wat iets meer is dan het maximaal aantal gekregen stemmen voor een partij in een provincie (de VVD had 485836 stemmen in Zuid-Holland). De andere grafiek geeft de verdeling van stemmen aan in Nederland, en na het klikken op een provincie op de landkaart geeft hij het aan per (aangeklikte) provincie.</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3" id="bron">
+      <h3>Bron</h3>
+      <a href="https://www.kiesraad.nl/verkiezingen/adviezen-en-publicaties/publicaties/2017/uitslagen/uitslagen-tweede-kamerverkiezing-2017/uitslagen-tweede-kamerverkiezing-2017">Kiesraad.nl</a>
     </div>
   </div>
 </div>
