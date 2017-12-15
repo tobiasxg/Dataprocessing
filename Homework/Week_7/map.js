@@ -1,38 +1,47 @@
 /*Tobias Garritsen, 10779582
-
+This code creates a bar chart and a map that show data about the dutch elections.
+The map and chart are interactive with eachother, by interacting with the map,
+the bar gets changed to the corresponding data.
+http://bl.ocks.org/phil-pedruco/9344373
 */
 
-window.onload = main()
+window.onload = main();
 
+// This is the main function and it loads the data in with queue.
 function main(){
 	d3.select("svg").remove();
 	d3.select("svg").remove();
 	queue()
 		.defer(d3.json, 'nld.json')
 		.defer(d3.json, 'ned_verkiezingen_2017.json')
-		.await(set_dropdown);
+		.await(setDropdown);
 }
 
-function change_map(){
+// When the map changes to a different party, this function is called.
+// Note that even this function and main are fairly similar, the main
+// sets the dropdown menu, while this one takes data from it. 
+function changeMap(){
 	d3.select("svg").remove();
 	d3.select("svg").remove();
 	queue()
 		.defer(d3.json, 'nld.json')
 		.defer(d3.json, 'ned_verkiezingen_2017.json')
-		.await(get_dropdown);
+		.await(getDropdown);
 }
 
-function create_map(nld, data, political_party) {
+// This function creates the map with the corresponding parties colours.
+function createMap(nld, data, politicalParty) {
 	var width = 700,
 	height = 550;
 
+	// This takes an svg object and pushes it in front of the rest.
 	d3.selection.prototype.moveToFront = function() {  
 		return this.each(function(){
 			this.parentNode.appendChild(this);
 		});
 	};
 
-
+	// This takes an svg object and pushes it to the back.
 	d3.selection.prototype.moveToBack = function() {  
 		return this.each(function() { 
 			var firstChild = this.parentNode.firstChild; 
@@ -41,8 +50,8 @@ function create_map(nld, data, political_party) {
 			} 
 		});
 	};
-
-	//scales = ['#7f3b08', '#b35806', '#e08214', '#fdb863', '#fee0b6', '#f7f7f7', '#d8daeb', '#b2abd2', '#8073ac', '#542788', '#2d004b'];
+	
+	// Pretty red colour scale.
 	scales = ['#ffffff', '#ffe5e5', '#ffcccc', '#ffb2b2', '#ff9999', '#ff7f7f', '#ff6666', '#ff4c4c', '#ff3232', '#ff1919', '#ff0000', '#e50000', '#cc0000', '#b20000', '#990000', '#7f0000', '#660000', '#4c0000', '#330000', '#190000'];
 
 	var colour = d3.scale.linear()
@@ -65,37 +74,52 @@ function create_map(nld, data, political_party) {
 	s = .2 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
 	t = [(width - 1.5 * s * (b[1][0] + b[0][0])) / 2, 20+(height - s * (b[1][1] + b[0][1])) / 2];
 
-	var province = svg.append("text")
-		.attr("opacity", 0)
-		.attr("x", width*0.3)
-		.attr("y",20)
-		.attr("stroke-width", 1);
-
-
+	// A black rect for showing data in.
 	var provinceRect = svg.append("rect")
-	      .attr("width", 80)
-	      .attr("height", 30)
+	      .attr("width", 150)
+	      .attr("height", 60)
 	      .attr("opacity", 0)
-	      .attr("offset",[-10,0])
 	      .style("border-radius", "2px")
 	      .style("fill", "black");
 
+	var nameText = svg.append("text")
+		.attr("dy", ".30em")
+		.attr("font-size", 13)
+		.attr("opacity", 0)
+		.style("fill", "white")
+		.style("text-anchor", "start");
+
+	var provinceText = svg.append("text")
+		.attr("dy", ".30em")
+		.attr("font-size", 11)
+		.attr("opacity", 0)
+		.style("fill", "white")
+		.style("text-anchor", "start");
+
+	var votesText = svg.append("text")
+		.attr("dy", ".30em")
+		.attr("font-size", 11)
+		.attr("opacity", 0)
+		.style("fill", "white")
+		.style("text-anchor", "start");
 
 	projection
 		.scale(s)
 		.translate(t);
 
 	svg.selectAll("path")
-		.data(topojson.feature(nld, nld.objects.subunits).features).enter()
+		.data(topojson.feature(nld, nld.objects.subunits)
+		.features).enter()
 		.append("path")
 		.attr("d", path)
 		.attr("stroke", "black")
 		.attr("stroke-width", 1)
 		.attr("fill", function(d, i) {
+			// This loop searches the province corresponding Votes 
+			// and party for the colour.
 			dataProv = data[d.properties.name]
-			tempMax = 0;
 			for(key in dataProv){
-				if (dataProv[key].Partij == political_party) {
+				if (dataProv[key].Partij == politicalParty) {
 					return colour(dataProv[key].Stemmen)
 				}
 			}
@@ -105,37 +129,44 @@ function create_map(nld, data, political_party) {
 		})
 		.on("click", function(d,i) {
 			allGraphs = document.querySelectorAll("svg");
+			// Remove the second svg graph, so not the map.
 			if(allGraphs.length > 1) {
 				allGraphs[1].remove();
 			}
-			create_graph(d.properties.name, data)
+			// Create corresponding barchart on click.
+			createGraph(d.properties.name, data)
 			d3.select(this)
 			.attr("opacity", 0.5)})
 			.on("mousemove", function(d,i) {
-				//console.log(d.properties.name)
 				mouse = d3.mouse(this);
 				mousex = mouse[0];
 				mousey = mouse[1];
-						//console.log(d.geometry.coordinates[0][0][0])
-						//console.log(d3.select(this)[0][0])
-						//console.log(d3.select(this).attr("d"))//.split(","))
-						//for(point in d3.select(this).attr("d").split(",")){
-						//	console.log(d3.select(this).attr("d").split(",")[point])
-						//}
-						//var t = document.createTextNode("This is a paragraph.");      // Create a text node
-						//d3.select(this).appendChild(t);
-						console.log(d3.select(this))
-				provinceRect.attr("x", 251).attr("y",162).attr("opacity", 1).moveToFront()
-				province.attr("opacity", 1).text(d.properties.name)
+				// This loop searches the province corresponding Votes 
+				// to display.
+				dataProv = data[d.properties.name]
+						for(key in dataProv){
+							if (dataProv[key].Partij == politicalParty) {
+								votes = dataProv[key].Stemmen
+							}
+						}
+				// All the data to be displayed on mousemovement.
+				provinceRect.attr("x", mousex+10).attr("y", mousey).attr("opacity", 0.8).moveToFront()
+				nameText.attr("x", mousex+20).attr("y", mousey+10).attr("opacity", 1).text(politicalParty).moveToFront();
+				provinceText.attr("x", mousex+20).attr("y", mousey+30).attr("opacity", 1).text("Provincie: " + d.properties.name).moveToFront();
+				votesText.attr("x", mousex+20).attr("y", mousey+50).attr("opacity", 1).text(votes + " Stemmen").moveToFront();
 				d3.select(this)
 				.attr("opacity", 0.5); })
 			.on("mouseout", function(d,i) {
-				province.attr("opacity", 0)
+				// Remove (make invisible) the displayed data. 
+				nameText.attr("opacity", 0)
+				provinceText.attr("opacity", 0)
+				votesText.attr("opacity", 0)
 				provinceRect.attr("opacity", 0).moveToBack()
 				d3.select(this)
 				.attr("opacity", 1)
 		});
 
+	// Create the legend with the previously mentioned scales (colours).
 	var legend = svg.selectAll(".legend")
 		.data(colour.domain())
 		.enter().append("g")
@@ -158,19 +189,19 @@ function create_map(nld, data, political_party) {
 		.text(function(d, i) { return (d/1000).toString()+"-"+(25+d/1000).toString(); });
 }
 
-function create_graph(province, data){
+// This function is for creating the barchart.
+function createGraph(province, data){
 
 	var margin = {top: 20, right: 20, bottom: 200, left: 100},
 		width = 800 - margin.left - margin.right,
 		height = 600 - margin.top - margin.bottom;
 
-
-	// set the ranges
+	// Set the ranges.
 	var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
 
 	var y = d3.scale.linear().range([height, 0]);
 
-	// define the axis
+	// Define the axis.
 	var xAxis = d3.svg.axis()
 		.scale(x)
 		.orient("bottom")
@@ -180,30 +211,25 @@ function create_graph(province, data){
 		.orient("left")
 		.ticks(10);
 
-
-	// add the SVG element
+	// Add the SVG element.
 	var svg = d3.select("body").select("#chart").append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+	// Get province data.
 	data = data[province]
-	max_votes = 0;
 	data.forEach(function(d) {
 		d.Partij = d.Partij;
 		d.Stemmen = +d.Stemmen;
-		if(d.Stemmen > max_votes) {
-			max_votes = d.Stemmen;
-			winner = d.Partij;
-		}
 	});
 
-	// scale the range of the data
+	// Scale the range of the data.
 	x.domain(data.map(function(d) { return d.Partij; }));
 	y.domain([0, d3.max(data, function(d) { return d.Stemmen; })]);
 
-	// add axis
+	// Add axis.
 	svg.append("g")
 		.attr("class", "x axis")
 		.attr("transform", "translate(0," + height + ")")
@@ -235,7 +261,7 @@ function create_graph(province, data){
 
 	var colour = d3.scale.category20();
 
-	// Add bar chart
+	// Add barchart.
 	svg.selectAll("bar")
 		.data(data)
 		.enter().append("rect")
@@ -256,6 +282,7 @@ function create_graph(province, data){
 		});
 }
 
+// Used for scaling the colours for the legend.
 function linspace(start, end, n) {
 	var out = [];
 	var delta = (end - start) / (n - 1);
@@ -272,7 +299,7 @@ function linspace(start, end, n) {
 
 
 // First time getting data to store keys in dropdown menu
-function set_dropdown(error, nld,  data){
+function setDropdown(error, nld,  data){
 	var select = document.getElementById("party");
 		for(var k in data.Nederland){
 		var option = document.createElement('option');
@@ -280,42 +307,21 @@ function set_dropdown(error, nld,  data){
 		select.add(option, 0);
 	}
 
+	// Get the current selected party from dropdown menu.
 	var e = document.getElementById("party");
 	var party = e.options[e.selectedIndex].text;
 
-	create_map(nld, data, party);
-	create_graph("Nederland", data);
-	//get_data();
+	// Create map and chart.
+	createMap(nld, data, party);
+	createGraph("Nederland", data);
 }
 
 // First time getting data to store keys in dropdown menu
-function get_dropdown(error, nld,  data){
+function getDropdown(error, nld,  data){
 	
 	var e = document.getElementById("party");
 	var party = e.options[e.selectedIndex].text;
 
-	create_map(nld, data, party);
-	create_graph("Nederland", data);
-}
-
-function get_data(){
-	d3.select("svg").remove();
-	d3.select("svg").remove();
-	queue()
-		.defer(d3.json, 'nld.json')
-		.defer(d3.json, 'ned_verkiezingen_2017.json')
-		.await(set_dropdown);
-}
-
-function visualize_data(){
-	if (error) {
-		alert(error);
-		throw error;
-	}
-
-	var e = document.getElementById("party");
-	var party = e.options[e.selectedIndex].text;
-
-	create_map(nld, data, party);
-	create_graph("Nederland", data);
+	createMap(nld, data, party);
+	createGraph("Nederland", data);
 }
