@@ -8,7 +8,7 @@ http://bl.ocks.org/phil-pedruco/9344373
 window.onload = main();
 
 // This is the main function and it loads the data in with queue.
-function main(){
+function main() {
 	d3.select("svg").remove();
 	d3.select("svg").remove();
 	queue()
@@ -20,7 +20,7 @@ function main(){
 // When the map changes to a different party, this function is called.
 // Note that even this function and main are fairly similar, the main
 // sets the dropdown menu, while this one takes data from it. 
-function changeMap(){
+function changeMap() {
 	d3.select("svg").remove();
 	d3.select("svg").remove();
 	queue()
@@ -117,10 +117,10 @@ function createMap(nld, data, politicalParty) {
 		.attr("fill", function(d, i) {
 			// This loop searches the province corresponding Votes 
 			// and party for the colour.
-			dataProv = data[d.properties.name]
-			for(key in dataProv){
+			dataProv = data[d.properties.name];
+			for(key in dataProv) {
 				if (dataProv[key].Partij == politicalParty) {
-					return colour(dataProv[key].Stemmen)
+					return colour(dataProv[key].Stemmen);
 				}
 			}
 		})
@@ -134,8 +134,8 @@ function createMap(nld, data, politicalParty) {
 				allGraphs[1].remove();
 			}
 			// Create corresponding barchart on click.
-			createGraph(d.properties.name, data)
-			d3.select(this)
+			createGraph(d.properties.name, data);
+			d3.select(this);
 			.attr("opacity", 0.5)})
 			.on("mousemove", function(d,i) {
 				mouse = d3.mouse(this);
@@ -143,26 +143,26 @@ function createMap(nld, data, politicalParty) {
 				mousey = mouse[1];
 				// This loop searches the province corresponding Votes 
 				// to display.
-				dataProv = data[d.properties.name]
-						for(key in dataProv){
+				dataProv = data[d.properties.name];
+						for(key in dataProv) {
 							if (dataProv[key].Partij == politicalParty) {
-								votes = dataProv[key].Stemmen
+								votes = dataProv[key].Stemmen;
 							}
 						}
 				// All the data to be displayed on mousemovement.
-				provinceRect.attr("x", mousex+10).attr("y", mousey).attr("opacity", 0.8).moveToFront()
+				provinceRect.attr("x", mousex+10).attr("y", mousey).attr("opacity", 0.8).moveToFront();
 				nameText.attr("x", mousex+20).attr("y", mousey+10).attr("opacity", 1).text(politicalParty).moveToFront();
 				provinceText.attr("x", mousex+20).attr("y", mousey+30).attr("opacity", 1).text("Provincie: " + d.properties.name).moveToFront();
 				votesText.attr("x", mousex+20).attr("y", mousey+50).attr("opacity", 1).text(votes + " Stemmen").moveToFront();
-				d3.select(this)
+				d3.select(this);
 				.attr("opacity", 0.5); })
 			.on("mouseout", function(d,i) {
 				// Remove (make invisible) the displayed data. 
-				nameText.attr("opacity", 0)
-				provinceText.attr("opacity", 0)
-				votesText.attr("opacity", 0)
-				provinceRect.attr("opacity", 0).moveToBack()
-				d3.select(this)
+				nameText.attr("opacity", 0);
+				provinceText.attr("opacity", 0);
+				votesText.attr("opacity", 0);
+				provinceRect.attr("opacity", 0).moveToBack();
+				d3.select(this);
 				.attr("opacity", 1)
 		});
 
@@ -190,7 +190,7 @@ function createMap(nld, data, politicalParty) {
 }
 
 // This function is for creating the barchart.
-function createGraph(province, data){
+function createGraph(province, data) {
 
 	var margin = {top: 20, right: 20, bottom: 200, left: 100},
 		width = 800 - margin.left - margin.right,
@@ -204,7 +204,7 @@ function createGraph(province, data){
 	// Define the axis.
 	var xAxis = d3.svg.axis()
 		.scale(x)
-		.orient("bottom")
+		.orient("bottom");
 
 	var yAxis = d3.svg.axis()
 		.scale(y)
@@ -278,7 +278,7 @@ function createGraph(province, data){
 			.attr("opacity", 0.5); })
 		.on("mouseout", function(d,i) {
 			d3.select(this)
-			.attr("opacity", 1)
+			.attr("opacity", 1);
 		});
 }
 
@@ -299,13 +299,13 @@ function linspace(start, end, n) {
 
 
 // First time getting data to store keys in dropdown menu
-function setDropdown(error, nld,  data){
+function setDropdown(error, nld,  data) {
 	var select = document.getElementById("party");
-		for(var k in data.Nederland){
-		var option = document.createElement('option');
-		option.text = option.value = data.Nederland[k].Partij;
-		select.add(option, 0);
-	}
+		for(var k in data.Nederland) {
+			var option = document.createElement("option");
+			option.text = option.value = data.Nederland[k].Partij;
+			select.add(option, 0);
+		}
 
 	// Get the current selected party from dropdown menu.
 	var e = document.getElementById("party");
@@ -317,7 +317,7 @@ function setDropdown(error, nld,  data){
 }
 
 // First time getting data to store keys in dropdown menu
-function getDropdown(error, nld,  data){
+function getDropdown(error, nld,  data) {
 	
 	var e = document.getElementById("party");
 	var party = e.options[e.selectedIndex].text;
