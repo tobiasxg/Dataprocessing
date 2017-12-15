@@ -135,7 +135,7 @@ function createMap(nld, data, politicalParty) {
 			}
 			// Create corresponding barchart on click.
 			createGraph(d.properties.name, data);
-			d3.select(this);
+			d3.select(this)
 			.attr("opacity", 0.5)})
 			.on("mousemove", function(d,i) {
 				mouse = d3.mouse(this);
@@ -154,7 +154,7 @@ function createMap(nld, data, politicalParty) {
 				nameText.attr("x", mousex+20).attr("y", mousey+10).attr("opacity", 1).text(politicalParty).moveToFront();
 				provinceText.attr("x", mousex+20).attr("y", mousey+30).attr("opacity", 1).text("Provincie: " + d.properties.name).moveToFront();
 				votesText.attr("x", mousex+20).attr("y", mousey+50).attr("opacity", 1).text(votes + " Stemmen").moveToFront();
-				d3.select(this);
+				d3.select(this)
 				.attr("opacity", 0.5); })
 			.on("mouseout", function(d,i) {
 				// Remove (make invisible) the displayed data. 
@@ -162,8 +162,8 @@ function createMap(nld, data, politicalParty) {
 				provinceText.attr("opacity", 0);
 				votesText.attr("opacity", 0);
 				provinceRect.attr("opacity", 0).moveToBack();
-				d3.select(this);
-				.attr("opacity", 1)
+				d3.select(this)
+				.attr("opacity", 1);
 		});
 
 	// Create the legend with the previously mentioned scales (colours).
